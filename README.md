@@ -1,8 +1,7 @@
 # 3pc Gralde dreipc.java.common.plugins.Plugins 
-Author: Nadav Babai @ 3pc GmbH
+Author: Nadav Babai | Sören Räuchle @ 3pc GmbH
 
-A test project to support the 3pc gradle plugins
-
+3pc Development Gradle Plugin for usage in all Java Projects
  
 More information is available on the gradle [website](https://docs.gradle.org/current/userguide/plugins.html#sec:plugin_markers)
 
@@ -15,7 +14,7 @@ The main idea is to publish the plugins as a maven group. Eventually the user ca
 
 ```
 plugins {
-   id 'dreipc.java.common.plugins:dreipc.java.common.plugins.docker:1.0'   
+   id("dreipc") version "0.0.1"   
 }  
 ```
 ![Example From The Website (https://docs.gradle.org/current/userguide/img/pluginMarkers.png)](https://docs.gradle.org/current/userguide/img/pluginMarkers.png)
