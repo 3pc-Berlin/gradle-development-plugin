@@ -1,5 +1,6 @@
-package dreipc.dev
+package dreipc.plugins.development
 
+import dreipc.plugins.development.DevPlugin
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Test
