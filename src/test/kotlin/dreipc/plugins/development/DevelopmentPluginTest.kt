@@ -1,17 +1,39 @@
 package dreipc.plugins.development
 
-import dreipc.plugins.development.DevPlugin
 import org.assertj.core.api.Assertions.assertThat
+import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class DevPluginTest {
+class DevelopmentPluginTest {
+
+    private val pluginProject : Project = ProjectBuilder.builder().build()
+
+    @BeforeEach
+    fun setUp(){
+        pluginProject.pluginManager.apply("dreipc.development")
+    }
 
     @Test
-    fun shouldLoadPlugin() {
-        val project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("dreipc")
+    fun pluginShouldBeEnabled(){
+        assertThat(pluginProject.plugins.getPlugin(DevelopmentPlugin::class.java)).isNotNull
+    }
 
-        assertThat(project.plugins.getPlugin(DevPlugin::class.java)).isNotNull()
+    @Test
+    fun codeGenerationShouldBeEnabled(){
+        assertThat(pluginProject.plugins.hasPlugin("io.freefair.lombok")).isNotNull
+    }
+
+    @Test
+    fun testConfigShouldBeLoaded(){
+        assertThat(pluginProject.tasks.findByPath("test")).isNotNull
+        assertThat(pluginProject.tasks.findByPath("integrationTest")).isNotNull
+        assertThat(pluginProject.tasks.findByPath("e2eTest")).isNotNull
+    }
+
+    @Test
+    fun versionShouldBeSet(){
+        assertThat(pluginProject.version.toString()).isNotEqualTo("unspecified")
     }
 }
