@@ -4,6 +4,7 @@ plugins {
 	java
 	kotlin("jvm") version "1.8.10"
 	id("com.gradle.plugin-publish") version "1.1.0"
+	id("dreipc.development") version "0.0.1"
 }
 
 group = "dreipc"
@@ -23,6 +24,7 @@ gradlePlugin {
 
 repositories {
 	maven(url = "https://nexus.3pc.de/repository/maven-group/")
+	maven(url = "https://plugins.gradle.org/m2/")
 	mavenLocal()
 }
 
@@ -31,8 +33,8 @@ dependencies {
 	implementation(kotlin("stdlib", "1.8.10"))
 
 	//Plugins
-	// https://mvnrepository.com/artifact/io.freefair.lombok/io.freefair.lombok.gradle.plugin
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:6.6.3")
+	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 
 
 	// Testing
