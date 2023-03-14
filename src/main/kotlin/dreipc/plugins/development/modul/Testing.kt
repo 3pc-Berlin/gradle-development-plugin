@@ -1,13 +1,27 @@
-package dreipc.plugins.development
+package dreipc.plugins.development.modul
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
+
+/**
+ * Java Testing Setup using JUnit5 and Jacoco Code Coverage
+ *
+ * This Plugin sets up default testing config for Unit-, Integration- and E2nd-to-End Testing
+ * @see [Lombok Gradle](https://plugins.gradle.org/plugin/io.freefair.lombok)
+ * @see [Official Lombok](https://projectlombok.org/)
+ *
+ * Author: Sören Räuchle
+ */
 class Testing : Plugin<Project> {
+
+    var TESTCONTAINERS_VERSION = "1.17.6"
+    var JUNIT_LAUNCHER_VERSION = "1.9.2"
 
     override fun apply(project: Project) {
         project.plugins.apply(JacocoPlugin::class.java)
@@ -18,8 +32,18 @@ class Testing : Plugin<Project> {
 
         basicTestSettings(project)
 
-
         project.codeCoverage()
+
+        project.dependencies {
+            "testRuntimeOnly"("org.junit.platform:junit-platform-launcher:$JUNIT_LAUNCHER_VERSION")
+            "testImplementation"("org.testcontainers:junit-jupiter:$TESTCONTAINERS_VERSION")
+        }
+
+        if (project.plugins.hasPlugin("org.springframework.boot")) {
+            project.dependencies {
+                "testImplementation"("org.springframework.boot:spring-boot-starter-test")
+            }
+        }
     }
 
     private fun basicTestSettings(project: Project) {
@@ -75,7 +99,6 @@ class Testing : Plugin<Project> {
     }
 
     private fun Project.codeCoverage() = afterEvaluate {
-
         val reportTask = this.tasks.getByName("jacocoTestReport") as JacocoReport
         reportTask.reports {
             csv.required.set(false)
