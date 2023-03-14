@@ -16,24 +16,25 @@ class DevelopmentPluginTest {
     }
 
     @Test
-    fun pluginShouldBeEnabled(){
+    fun `plugin should be enabled`(){
         assertThat(pluginProject.plugins.getPlugin(DevelopmentPlugin::class.java)).isNotNull
     }
 
     @Test
-    fun codeGenerationShouldBeEnabled(){
+    fun `code generation lombok plugin should be enabled`(){
         assertThat(pluginProject.plugins.hasPlugin("io.freefair.lombok")).isNotNull
     }
 
     @Test
-    fun testConfigShouldBeLoaded(){
+    fun `test configuration should be present`(){
         assertThat(pluginProject.tasks.findByPath("test")).isNotNull
         assertThat(pluginProject.tasks.findByPath("integrationTest")).isNotNull
         assertThat(pluginProject.tasks.findByPath("e2eTest")).isNotNull
     }
 
     @Test
-    fun versionShouldBeSet(){
+    fun `semantic versioning should be enabled and set up`(){
+        assertThat(pluginProject.plugins.hasPlugin("io.wusa:semver-git-plugin")).isNotNull
         assertThat(pluginProject.version.toString()).isNotEqualTo("unspecified")
     }
 }
