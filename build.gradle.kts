@@ -13,10 +13,10 @@ java.setSourceCompatibility(17)
 gradlePlugin {
 	plugins {
 		create("dreipcDevPlugin") {
-			id = "dreipc"
+			id = "dreipc.development"
 			displayName = "3pc Java Development Plugin"
 			description = "Pre configured external plugins for 3pc Java Projects."
-			implementationClass = "dreipc.dev.DevPlugin"
+			implementationClass = "dreipc.plugins.development.DevelopmentPlugin"
 		}
 	}
 }
@@ -30,8 +30,10 @@ dependencies {
 	// Kotlin
 	implementation(kotlin("stdlib", "1.8.10"))
 
-	// Plugins
+	//Plugins
+	// https://mvnrepository.com/artifact/io.freefair.lombok/io.freefair.lombok.gradle.plugin
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:6.6.3")
+
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")
@@ -48,3 +50,4 @@ publishing {
 		mavenLocal()
 	}
 }
+
