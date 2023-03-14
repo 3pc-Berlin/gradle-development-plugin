@@ -37,4 +37,11 @@ class DevelopmentPluginTest {
         assertThat(pluginProject.plugins.hasPlugin("io.wusa:semver-git-plugin")).isNotNull
         assertThat(pluginProject.version.toString()).isNotEqualTo("unspecified")
     }
+
+    @Test
+    fun `code quality plugins should be enabled`(){
+        assertThat(pluginProject.plugins.hasPlugin("com.diffplug.spotless:spotless-plugin-gradle")).isNotNull
+        assertThat(pluginProject.plugins.hasPlugin("net.ltgt.gradle:gradle-errorprone-plugin")).isNotNull
+        assertThat(pluginProject.plugins.hasPlugin("net.ltgt.gradle:gradle-nullaway-plugin")).isNotNull
+    }
 }

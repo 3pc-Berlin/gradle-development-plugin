@@ -36,6 +36,10 @@ dependencies {
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:6.6.3")
 	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 
+	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.17.0")
+	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
+	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
+
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")

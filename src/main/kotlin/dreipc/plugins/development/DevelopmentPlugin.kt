@@ -1,9 +1,6 @@
 package dreipc.plugins.development
 
-import dreipc.plugins.development.modul.Lombok
-import dreipc.plugins.development.modul.GradlePropertyExpansion
-import dreipc.plugins.development.modul.SemanticVersioning
-import dreipc.plugins.development.modul.Testing
+import dreipc.plugins.development.modul.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -20,5 +17,6 @@ class DevelopmentPlugin : Plugin<Project> {
         target.plugins.apply(GradlePropertyExpansion::class.java)
         target.plugins.apply(Testing::class.java)
         target.plugins.apply(SemanticVersioning::class.java)
+        target.plugins.apply(CodeQuality::class.java)
     }
 }
