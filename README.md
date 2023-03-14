@@ -1,26 +1,40 @@
-# 3pc Gralde dreipc.java.common.plugins.Plugins 
-Author: Nadav Babai | Sören Räuchle @ 3pc GmbH
+# Gradle Development Plugin 
+Author: Sören Räuchle @ [3pc GmbH](https://3pc.de)
+
+Gradle Plugin for Java Projects. This Plugin reduces boilerplate Code of java development Projects and sets up some standard tasks for testing and code-quality.
+
+- Unit-, Integration and E2E testing tasks
+- Error-prone and nullify Code Checks
+- Code style checks including automated formatting (Plantir style)
+- Git Commit message verify and check
+- Semantic Versioning
+- Lombok Code generation
+- Dockerization of java code (tbd)
 
 3pc Development Gradle Plugin for usage in all Java Projects
  
 More information is available on the gradle [website](https://docs.gradle.org/current/userguide/plugins.html#sec:plugin_markers)
 
+---
 
-### Introduction to Gradle dreipc.java.common.plugins.Plugins main idea
-In order to save time and redundant code, the main idea is to use what so called: binary dreipc.java.common.plugins.plugin. 
-Binary dreipc.java.common.plugins.Plugins must implement the PlugIn Interface and they are located on a custom repository. 
+### Install the Plugin
+Add the plugin inside your `build.gradle(.kts)`
+```groovy
+// build.gradle(.kts)
+plugins{
+  id("dreipc.development") version "0.0.1"
+}
+```
 
-The main idea is to publish the plugins as a maven group. Eventually the user can decide which version and which plugins to import. 
+**Development**: During local development the plugin will be published on `mavenLocal`. Please make sure you added the repository inside your `settings.gradle` to get the plugin dev version. 
+```groovy
+// settings.gradle
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+rootProject.name = "Your great project name goes here!" 
 
 ```
-plugins {
-   id("dreipc") version "0.0.1"   
-}  
-```
-![Example From The Website (https://docs.gradle.org/current/userguide/img/pluginMarkers.png)](https://docs.gradle.org/current/userguide/img/pluginMarkers.png)
-
-Another example to implementation: 
-https://github.com/TechPrimers/gradle-custom-dreipc.java.common.plugins.plugin-example
-
-Example to build custom dreipc.java.common.plugins.plugin 
-https://github.com/jonathanhood/gradle-dreipc.java.common.plugins.plugin-example
