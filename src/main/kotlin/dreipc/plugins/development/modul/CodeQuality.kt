@@ -18,6 +18,7 @@ class CodeQuality : Plugin<Project> {
 
     private var nullawayVersion : String = "0.10.8"
     private var errorproneCoreVersion = "2.18.0"
+    private var klintVersion = "0.48.2"
     override fun apply(project: Project) {
 
         project.plugins.apply(SpotlessPlugin::class.java)
@@ -59,14 +60,14 @@ class CodeQuality : Plugin<Project> {
                 endWithNewline()
 
                 replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
-                replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\\\s*\\\\*/\\n", "§1")
+                replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\s*\\*/\\n)", "§1")
             }
             kotlin {
                 project.fileTree(".") {
                     include("**/*.kt")
                 }
                 trimTrailingWhitespace()
-                ktlint("0.30.0")
+                ktlint(klintVersion)
             }
         }
     }
