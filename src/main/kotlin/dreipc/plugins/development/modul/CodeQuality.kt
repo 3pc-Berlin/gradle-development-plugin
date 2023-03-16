@@ -14,11 +14,10 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 import java.io.File
 
-// ToDo: Add GitHook for code formatting!
 class CodeQuality : Plugin<Project> {
 
-    var NULLIFY_VERSION : String = "0.10.8"
-    var ERRORPRONE_CORE_VERSION = "2.18.0"
+    private var nullawayVersion : String = "0.10.8"
+    private var errorproneCoreVersion = "2.18.0"
     override fun apply(project: Project) {
 
         project.plugins.apply(SpotlessPlugin::class.java)
@@ -58,6 +57,16 @@ class CodeQuality : Plugin<Project> {
                 removeUnusedImports()
                 trimTrailingWhitespace()
                 endWithNewline()
+
+                replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
+                replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\\\s*\\\\*/\\n", "§1")
+            }
+            kotlin {
+                project.fileTree(".") {
+                    include("**/*.kt")
+                }
+                trimTrailingWhitespace()
+                ktlint("0.30.0")
             }
         }
     }
@@ -74,8 +83,8 @@ class CodeQuality : Plugin<Project> {
 
         with(project){
             dependencies {
-                "errorprone"("com.google.errorprone:error_prone_core:$ERRORPRONE_CORE_VERSION")
-                "errorprone"("com.uber.nullaway:nullaway:$NULLIFY_VERSION")
+                "errorprone"("com.google.errorprone:error_prone_core:$errorproneCoreVersion")
+                "errorprone"("com.uber.nullaway:nullaway:$nullawayVersion")
             }
         }
     }
