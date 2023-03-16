@@ -10,6 +10,7 @@ import org.gradle.api.Transformer
 import org.gradle.kotlin.dsl.get
 
 class SemanticVersioning : Plugin<Project> {
+
     override fun apply(project: Project) {
         project.plugins.apply(SemverGitPlugin::class.java)
 
@@ -17,7 +18,7 @@ class SemanticVersioning : Plugin<Project> {
 
         semver.tagType = TagType.LIGHTWEIGHT
         semver.snapshotSuffix = ""
-        semver.dirtyMarker = "uncommitted-files"
+        semver.dirtyMarker = "" //"uncommitted-files"
         semver.initialVersion = "0.0.1"
 
         semver.branches {
@@ -47,10 +48,6 @@ class SemanticVersioning : Plugin<Project> {
             }
         }
 
-        project.tasks.getByName("showVersion").doLast {
-            println("Version: " + semver.info)
-        }
-
         // Disable tasks due to incompatibility with the gradle configuration cache (doLast and Project usage Problem)
         // @see https://docs.gradle.org/8.0.2/userguide/configuration_cache.html#config_cache:requirements:disallowed_types
         val showInfo = project.tasks.getByName("showInfo")
@@ -59,7 +56,22 @@ class SemanticVersioning : Plugin<Project> {
         val showVersion = project.tasks.getByName("showVersion")
         showVersion.enabled = false
 
-        project.project.version = System.getenv("CI_APP_VERSION") ?: Info(project).toString()
+        val version = System.getenv("CI_APP_VERSION") ?: semver.info.toString()
+        project.version = version
+        project.project.version = version
+        project.allprojects.forEach { it.version = version }
+
+        with(project){
+            updateVersion()
+        }
+    }
+
+    private fun Project.updateVersion() = afterEvaluate{
+        val semver = project.extensions["semver"] as SemverGitPluginExtension
+        val version = System.getenv("CI_APP_VERSION") ?: semver.info.toString()
+        this.version = version
+        this.project.version = version
+        this.allprojects.forEach { it.version = version }
     }
 
 }

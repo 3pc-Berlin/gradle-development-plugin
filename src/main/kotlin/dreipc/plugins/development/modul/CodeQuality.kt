@@ -12,6 +12,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
+import java.io.File
 
 // ToDo: Add GitHook for code formatting!
 class CodeQuality : Plugin<Project> {
@@ -27,6 +28,20 @@ class CodeQuality : Plugin<Project> {
         configSpotless(project)
         configErrorProne(project)
         configNullaway(project)
+
+        addGitHock()
+    }
+
+    private fun addGitHock() {
+        val gitHooksDir = File(".git/hooks")
+        if(!gitHooksDir.exists()) return
+
+        val preCommitHookContent = this::class.java.classLoader.getResourceAsStream("pre-commit")
+            ?.bufferedReader()
+            ?.readText()
+            ?: ""
+
+        gitHooksDir.resolve("pre-commit").writeText(preCommitHookContent, Charsets.UTF_8)
     }
 
     private fun configSpotless(project: Project) {

@@ -1,7 +1,6 @@
 plugins {
 	`java-gradle-plugin`
 	`kotlin-dsl`
-	java
 	kotlin("jvm") version "1.8.10"
 	id("com.gradle.plugin-publish") version "1.1.0"
 	id("dreipc.development") version "0.0.1"
@@ -40,14 +39,13 @@ dependencies {
 	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
 	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
 
-
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>{
 	useJUnitPlatform()
 }
 
