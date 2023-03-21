@@ -3,7 +3,7 @@ plugins {
 	`kotlin-dsl`
 	kotlin("jvm") version "1.8.10"
 	id("com.gradle.plugin-publish") version "1.1.0"
-	id("dreipc.development") version "0.0.1"
+	id("dreipc.development") version "0.0.2"
 }
 
 group = "dreipc"
@@ -31,14 +31,14 @@ dependencies {
 	implementation(kotlin("stdlib", "1.8.10"))
 
 	//Plugins
-	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:6.6.3")
+	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:8.0.1")
 	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 
 	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.17.0")
 	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
 	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
 
-	implementation("com.bmuschko:gradle-docker-plugin:7.3.0")
+	implementation("com.bmuschko:gradle-docker-plugin:9.3.0")
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")
