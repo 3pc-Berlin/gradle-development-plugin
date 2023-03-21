@@ -44,4 +44,5 @@ class DevelopmentPluginTest {
         assertThat(pluginProject.plugins.hasPlugin("net.ltgt.gradle:gradle-errorprone-plugin")).isNotNull
         assertThat(pluginProject.plugins.hasPlugin("net.ltgt.gradle:gradle-nullaway-plugin")).isNotNull
     }
+
 }

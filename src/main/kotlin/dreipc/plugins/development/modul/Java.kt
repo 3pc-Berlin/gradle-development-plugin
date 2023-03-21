@@ -6,6 +6,8 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.maven
+import org.gradle.kotlin.dsl.repositories
 
 class Java : Plugin<Project> {
     override fun apply(project: Project) {
@@ -17,6 +19,12 @@ class Java : Plugin<Project> {
             val javaPluginExtension = project.extensions.get("java") as JavaPluginExtension
             javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
             javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
+        }
+
+        // 3pc Maven Repository
+        project.repositories {
+            maven(url = "https://nexus.3pc.de/repository/maven-group/")
+            mavenLocal()
         }
     }
 }
