@@ -61,17 +61,5 @@ class SemanticVersioning : Plugin<Project> {
         project.project.version = version
         project.allprojects.forEach { it.version = version }
 
-        with(project){
-            updateVersion()
-        }
     }
-
-    private fun Project.updateVersion() = afterEvaluate{
-        val semver = project.extensions["semver"] as SemverGitPluginExtension
-        val version = System.getenv("CI_APP_VERSION") ?: semver.info.toString()
-        this.version = version
-        this.project.version = version
-        this.allprojects.forEach { it.version = version }
-    }
-
 }
