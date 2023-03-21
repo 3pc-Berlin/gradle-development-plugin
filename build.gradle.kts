@@ -7,7 +7,6 @@ plugins {
 }
 
 group = "dreipc"
-version = "0.0.1"
 java.setSourceCompatibility(17)
 
 gradlePlugin {
@@ -38,6 +37,8 @@ dependencies {
 	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.17.0")
 	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
 	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
+
+	implementation("com.bmuschko:gradle-docker-plugin:7.3.0")
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")

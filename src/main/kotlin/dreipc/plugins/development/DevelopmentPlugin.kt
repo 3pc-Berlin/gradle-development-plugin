@@ -18,5 +18,7 @@ class DevelopmentPlugin : Plugin<Project> {
         target.plugins.apply(Testing::class.java)
         target.plugins.apply(CodeQuality::class.java)
         target.plugins.apply(GradlePropertyExpansion::class.java)
+        target.plugins.apply(Docker::class.java)
+
     }
 }
