@@ -1,0 +1,5 @@
+# Whitelist approach
+# Exclude everything:
+*
+# Include as exceptions:
+!/build/libs/**
