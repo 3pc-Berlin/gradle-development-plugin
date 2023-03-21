@@ -8,17 +8,17 @@ import org.gradle.api.Project
 class DevelopmentPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-
-        if (!target.plugins.hasPlugin("java")) {
-            target.plugins.apply("java")
-        }
-
+        target.plugins.apply(Java::class.java)
         target.plugins.apply(SemanticVersioning::class.java)
         target.plugins.apply(Lombok::class.java)
         target.plugins.apply(Testing::class.java)
         target.plugins.apply(CodeQuality::class.java)
         target.plugins.apply(GradlePropertyExpansion::class.java)
-        target.plugins.apply(Docker::class.java)
+
+
+        if (target.plugins.hasPlugin("org.springframework.boot")) {
+            target.plugins.apply(Docker::class.java)
+        }
 
     }
 }
