@@ -18,13 +18,14 @@ class Java : Plugin<Project> {
         project.plugins.withType(JavaPlugin::class.java) {
             val javaPluginExtension = project.extensions.get("java") as JavaPluginExtension
             javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
-            javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
         }
 
-        // 3pc Maven Repository
-        project.repositories {
-            maven(url = "https://nexus.3pc.de/repository/maven-group/")
-            mavenLocal()
+        // ADD Default  3pc Maven Repository
+        with(project) {
+            repositories {
+                maven(url = "https://nexus.3pc.de/repository/maven-group/")
+                mavenLocal()
+            }
         }
     }
 }
