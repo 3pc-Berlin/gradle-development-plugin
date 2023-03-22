@@ -7,7 +7,6 @@ plugins {
 }
 
 group = "dreipc"
-java.setSourceCompatibility(17)
 
 gradlePlugin {
 	plugins {
@@ -44,10 +43,6 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-}
-
-tasks.withType<Test>{
-	useJUnitPlatform()
 }
 
 publishing {
