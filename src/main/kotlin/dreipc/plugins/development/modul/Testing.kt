@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.get
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
@@ -20,8 +21,9 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  */
 class Testing : Plugin<Project> {
 
-    var TESTCONTAINERS_VERSION = "1.17.6"
-    var JUNIT_LAUNCHER_VERSION = "1.9.2"
+    val TESTCONTAINERS_VERSION = "1.17.6"
+    val JUNIT_LAUNCHER_VERSION = "1.9.2"
+    val REACTOR_BLOCKHOUND_VERSION = "1.0.7.RELEASE"
 
     override fun apply(project: Project) {
         project.plugins.apply(JacocoPlugin::class.java)
@@ -34,10 +36,27 @@ class Testing : Plugin<Project> {
 
         project.codeCoverage()
 
+
         project.dependencies {
             "testRuntimeOnly"("org.junit.platform:junit-platform-launcher:$JUNIT_LAUNCHER_VERSION")
             "testImplementation"("org.testcontainers:junit-jupiter:$TESTCONTAINERS_VERSION")
         }
+
+        project.afterEvaluate {
+            val dependencies = project.configurations.get("implementation").allDependencies.map { it.name }
+            System.out.println("All Dependencies")
+            System.out.println(dependencies)
+            println("All Dependencies")
+            println(dependencies)
+            if ("spring-boot-starter-webflux" in dependencies || "reactor-core" in dependencies) {
+                project.dependencies {
+                    "testImplementation"("io.projectreactor:reactor-test")
+                    "testImplementation"("io.projectreactor.tools:blockhound:${REACTOR_BLOCKHOUND_VERSION}")
+                }
+            }
+        }
+
+        project.configurations.get("implementation").allDependencies.forEach { println("name: ${it.name} group: ${it.group}") }
 
         if (project.plugins.hasPlugin("org.springframework.boot")) {
             project.dependencies {
