@@ -13,12 +13,10 @@ class DevelopmentPlugin : Plugin<Project> {
         target.plugins.apply(Lombok::class.java)
         target.plugins.apply(Testing::class.java)
         target.plugins.apply(CodeQuality::class.java)
-        target.plugins.apply(GradlePropertyExpansion::class.java)
-
 
         if (target.plugins.hasPlugin("org.springframework.boot")) {
+            target.plugins.apply(GradlePropertyExpansion::class.java)
             target.plugins.apply(Docker::class.java)
         }
-
     }
 }
