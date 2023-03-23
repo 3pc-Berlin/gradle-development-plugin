@@ -76,7 +76,8 @@ class Docker : Plugin<Project> {
             val javaVersion = properties["sourceCompatibility"]
             from("${DOCKER_BASE_IMAGE}:${javaVersion}")
 
-            exposePort(DEFAULT_EXPOSE_PORT)
+            val port = System.getenv("DOCKER_EXPOSE_PORT").toIntOrNull() ?: DEFAULT_EXPOSE_PORT
+            exposePort(port)
             environmentVariable("JAVA_OPTS_LOCAL_DEFAULTS", JAVA_OPTS_DEFAULT)
             environmentVariable("JAVA_OPTS_HARDCODED", "")
 
