@@ -73,6 +73,7 @@ class Testing : Plugin<Project> {
 
             minHeapSize = "512m"
             maxHeapSize = "2048m"
+            maxParallelForks = 3
 
             systemProperty("junit.extensions.autodetection.enabled", "true")
             systemProperty("junit.jupiter.execution.parallel.enabled", "true")
