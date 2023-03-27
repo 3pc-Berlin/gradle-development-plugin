@@ -6,9 +6,9 @@ Gradle Plugin for Java Projects. This Plugin reduces (build) boilerplate Code of
 #### Features:
 - Unit-, Integration and E2E testing tasks
 - Error-prone and nullify Code Checks
-- Code style checks including automated formatting (Plantir style)
+- Code style checks including automated formatting (Palantir style)
 - Git Commit message verify and check
-- Semantic Versioning
+- Semantic Versioning based on git tags
 - Lombok Code generation
 - Dockerization of java code
 
