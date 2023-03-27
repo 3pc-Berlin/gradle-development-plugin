@@ -29,7 +29,7 @@ dependencies {
 	// Kotlin
 	implementation(kotlin("stdlib", "1.8.10"))
 
-	//Plugins
+	//Plugins see: https://plugins.gradle.org/
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:8.0.1")
 	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 

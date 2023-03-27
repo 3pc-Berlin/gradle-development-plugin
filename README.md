@@ -1,19 +1,25 @@
 # Gradle Development Plugin 
-Author: Sören Räuchle @ [3pc GmbH](https://3pc.de)
+Author: Sören Räuchle | [3pc GmbH](https://3pc.de)
 
-Gradle Plugin for Java Projects. This Plugin reduces boilerplate Code of java development Projects and sets up some standard tasks for testing and code-quality.
+Gradle Plugin for Java Projects. This Plugin reduces (build) boilerplate Code of java development Projects and sets up some standard tasks.
 
+#### Features:
 - Unit-, Integration and E2E testing tasks
 - Error-prone and nullify Code Checks
 - Code style checks including automated formatting (Plantir style)
 - Git Commit message verify and check
 - Semantic Versioning
 - Lombok Code generation
-- Dockerization of java code (tbd)
+- Dockerization of java code
 
-3pc Development Gradle Plugin for usage in all Java Projects
- 
-More information is available on the gradle [website](https://docs.gradle.org/current/userguide/plugins.html#sec:plugin_markers)
+Used Plugins: @see `build.gradle.kts`
+
+More Info:
+- [testing](/docs/testing.md)
+- [code-quality](/docs/code-quality.md)
+- [java config](/docs/java.md)
+- [spring boot config](/docs/spring.md)
+- [docker](/docs/docker.md)
 
 ---
 
@@ -22,7 +28,7 @@ Add the plugin inside your `build.gradle(.kts)`
 ```groovy
 // build.gradle(.kts)
 plugins{
-  id("dreipc.development") version "0.0.1"
+  id("dreipc.development") version "0.0.2"
 }
 ```
 
