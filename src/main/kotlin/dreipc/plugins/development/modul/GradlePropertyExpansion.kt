@@ -1,6 +1,5 @@
 package dreipc.plugins.development.modul
 
-
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -19,22 +18,22 @@ import org.gradle.language.jvm.tasks.ProcessResources
  */
 class GradlePropertyExpansion : Plugin<Project> {
 
-    @Suppress("UnstableApiUsage") // ignore @Incubating
-    override fun apply(project: Project) {
-        val processResources = project.tasks.getByName("processResources") as ProcessResources
+  @Suppress("UnstableApiUsage") // ignore @Incubating
+  override fun apply(project: Project) {
+    val processResources = project.tasks.getByName("processResources") as ProcessResources
 
-        with(processResources) {
-            project.logger.info("Expand Gradle Properties")
-            duplicatesStrategy = DuplicatesStrategy.INCLUDE
-            from("src/main/resources") {
-                include(".*", "**/application*.yml", "**/application*.properties")
-                project.properties.forEach { prop ->
-                    if (prop.value != null) {
-                        filter<ReplaceTokens>("tokens" to mapOf(prop.key.toString() to prop.value.toString()))
-                        filter<ReplaceTokens>("tokens" to mapOf("project." + prop.key.toString() to prop.value.toString()))
-                    }
-                }
-            }
+    with(processResources) {
+      project.logger.info("Expand Gradle Properties")
+      duplicatesStrategy = DuplicatesStrategy.INCLUDE
+      from("src/main/resources") {
+        include(".*", "**/application*.yml", "**/application*.properties")
+        project.properties.forEach { prop ->
+          if (prop.value != null) {
+            filter<ReplaceTokens>("tokens" to mapOf(prop.key.toString() to prop.value.toString()))
+            filter<ReplaceTokens>("tokens" to mapOf("project." + prop.key.toString() to prop.value.toString()))
+          }
         }
+      }
     }
+  }
 }

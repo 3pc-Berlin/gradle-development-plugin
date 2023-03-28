@@ -10,22 +10,22 @@ import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.repositories
 
 class Java : Plugin<Project> {
-    override fun apply(project: Project) {
-        if (!project.plugins.hasPlugin("java")) {
-            project.plugins.apply("java")
-        }
-
-        project.plugins.withType(JavaPlugin::class.java) {
-            val javaPluginExtension = project.extensions.get("java") as JavaPluginExtension
-            javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
-        }
-
-        // ADD Default  3pc Maven Repository
-        with(project) {
-            repositories {
-                maven(url = "https://nexus.3pc.de/repository/maven-group/")
-                mavenLocal()
-            }
-        }
+  override fun apply(project: Project) {
+    if (!project.plugins.hasPlugin("java")) {
+      project.plugins.apply("java")
     }
+
+    project.plugins.withType(JavaPlugin::class.java) {
+      val javaPluginExtension = project.extensions.get("java") as JavaPluginExtension
+      javaPluginExtension.setSourceCompatibility(JavaVersion.JAVA_17)
+    }
+
+    // ADD Default  3pc Maven Repository
+    with(project) {
+      repositories {
+        maven(url = "https://nexus.3pc.de/repository/maven-group/")
+        mavenLocal()
+      }
+    }
+  }
 }

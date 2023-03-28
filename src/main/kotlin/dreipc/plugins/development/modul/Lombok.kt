@@ -14,19 +14,19 @@ import org.gradle.api.Project
  * Author: Sören Räuchle
  */
 class Lombok : Plugin<Project> {
-    override fun apply(project: Project) {
-        project.plugins.apply(LombokPlugin::class.java)
+  override fun apply(project: Project) {
+    project.plugins.apply(LombokPlugin::class.java)
 
-        project.changeLombokGroupName("code generation")
+    project.changeLombokGroupName("code generation")
+  }
+
+  private fun Project.changeLombokGroupName(name: String) = afterEvaluate {
+    project.tasks.withType(LombokTask::class.java) {
+      group = name
     }
 
-    private fun  Project.changeLombokGroupName(name : String) = afterEvaluate {
-        project.tasks.withType(LombokTask::class.java) {
-            group = name
-        }
-
-        this.tasks.withType(LombokConfig::class.java) {
-            group = name
-        }
+    this.tasks.withType(LombokConfig::class.java) {
+      group = name
     }
+  }
 }
