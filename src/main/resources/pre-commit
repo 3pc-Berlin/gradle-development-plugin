@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Source: https://github.com/diffplug/spotless/issues/178
+# This Script is automatically added by the Gradle Plugin "dreipc.development"
 
 filesToAddAfterFormatting=()
 containsJavaOrKotlin=0
@@ -24,7 +24,7 @@ done;
 # If any java or kotlin files are found, run spotlessApply
 if [ "$containsJavaOrKotlin" == "1" ] ; then
   echo "*****Kotlin and/or Java found in staging, running:  ./gradlew -PdisableSpotlessCheck spotlessApply *****"
-  ./gradlew -PdisableSpotlessCheck spotlessApply
+  ./gradlew spotlessApply
 else
   echo "Not running spotlessApply"
 fi

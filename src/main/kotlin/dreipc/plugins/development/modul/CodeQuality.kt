@@ -16,82 +16,91 @@ import java.io.File
 
 class CodeQuality : Plugin<Project> {
 
-    private var nullawayVersion : String = "0.10.8"
-    private var errorproneCoreVersion = "2.18.0"
-    private var klintVersion = "0.48.2"
-    override fun apply(project: Project) {
+  private var nullawayVersion: String = "0.10.8"
+  private var errorproneCoreVersion = "2.18.0"
 
-        project.plugins.apply(SpotlessPlugin::class.java)
-        project.plugins.apply(ErrorPronePlugin::class.java)
-        project.plugins.apply(NullAwayPlugin::class.java)
+  override fun apply(project: Project) {
+    project.plugins.apply(SpotlessPlugin::class.java)
+    project.plugins.apply(ErrorPronePlugin::class.java)
+    project.plugins.apply(NullAwayPlugin::class.java)
 
-        configSpotless(project)
-        configErrorProne(project)
-        configNullaway(project)
+    configSpotless(project)
+    configErrorProne(project)
+    configNullaway(project)
 
-        addGitHock()
-    }
+    addGitHock()
+  }
 
-    private fun addGitHock() {
-        val gitHooksDir = File(".git/hooks")
-        if(!gitHooksDir.exists()) return
+  private fun addGitHock() {
+    val gitHooksDir = File(".git/hooks")
+    if (!gitHooksDir.exists()) return
 
-        val preCommitHookContent = this::class.java.classLoader.getResourceAsStream("pre-commit")
-            ?.bufferedReader()
-            ?.readText()
-            ?: ""
+    val preCommitHookContent = this::class.java.classLoader.getResourceAsStream("pre-commit")
+      ?.bufferedReader()
+      ?.readText()
+      ?: ""
 
-        gitHooksDir.resolve("pre-commit").writeText(preCommitHookContent, Charsets.UTF_8)
-    }
+    val preCommit = gitHooksDir.resolve("pre-commit")
 
-    private fun configSpotless(project: Project) {
-        val spotless = project.extensions["spotless"] as SpotlessExtension
+    preCommit.writeText(preCommitHookContent, Charsets.UTF_8)
+    preCommit.setExecutable(true, false)
+    preCommit.setReadable(true, false)
+    preCommit.setWritable(true, true)
 
-        with(spotless) {
-            java {
-                project.fileTree(".") {
-                    include("**/*.java")
-                    exclude("**/build/**", "**/build-*/**")
-                }
-                toggleOffOn()
-                palantirJavaFormat()
-                removeUnusedImports()
-                trimTrailingWhitespace()
-                endWithNewline()
+    File("gradlew").setExecutable(true, false)
+    File("gradlew.bat").setExecutable(true, false)
+  }
 
-                replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
-                replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\s*\\*/\\n)", "§1")
-            }
-            kotlin {
-                project.fileTree(".") {
-                    include("**/*.kt")
-                }
-                trimTrailingWhitespace()
-                ktlint(klintVersion)
-            }
+  private fun configSpotless(project: Project) {
+    val spotless = project.extensions["spotless"] as SpotlessExtension
+
+    with(spotless) {
+      java {
+        project.fileTree(".") {
+          include("**/*.java")
+          exclude("**/build/**", "**/build-*/**")
         }
-    }
+        toggleOffOn()
+        palantirJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
 
-    private fun configErrorProne(project: Project) {
-        project.tasks.withType(JavaCompile::class.java) {
-            options.errorprone.disableWarningsInGeneratedCode.set(true)
-            options.errorprone.isEnabled.set(true)
-            options.errorprone.nullaway {
-                error()
-                unannotatedSubPackages.add("dreipc")
-            }
+        replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
+        replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\s*\\*/\\n)", "§1")
+      }
+      kotlin {
+        project.fileTree(".") {
+          include("**/*.kt")
         }
+        trimTrailingWhitespace()
+        encoding("utf-8")
 
-        with(project){
-            dependencies {
-                "errorprone"("com.google.errorprone:error_prone_core:$errorproneCoreVersion")
-                "errorprone"("com.uber.nullaway:nullaway:$nullawayVersion")
-            }
-        }
+        ktlint().editorConfigOverride(mapOf("disabled_rules" to "no-wildcard-imports,filename", "indent_size" to 2))
+      }
+    }
+  }
+
+  private fun configErrorProne(project: Project) {
+    project.tasks.withType(JavaCompile::class.java) {
+      options.errorprone.disableWarningsInGeneratedCode.set(true)
+      options.errorprone.isEnabled.set(true)
+      options.errorprone.nullaway {
+        error()
+        unannotatedSubPackages.add("dreipc")
+      }
     }
 
-    private fun configNullaway(project: Project){
-        val nullaway = project.extensions["nullaway"] as NullAwayExtension
-        nullaway.annotatedPackages.add("net.ltgt")
+    with(project) {
+      dependencies {
+        "errorprone"("com.google.errorprone:error_prone_core:$errorproneCoreVersion")
+        "errorprone"("com.uber.nullaway:nullaway:$nullawayVersion")
+      }
     }
+  }
+
+  private fun configNullaway(project: Project) {
+    val nullaway = project.extensions["nullaway"] as NullAwayExtension
+    nullaway.annotatedPackages.add("net.ltgt")
+  }
 }
