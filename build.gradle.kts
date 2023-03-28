@@ -3,7 +3,7 @@ plugins {
 	`kotlin-dsl`
 	kotlin("jvm") version "1.8.10"
 	id("com.gradle.plugin-publish") version "1.1.0"
-	id("dreipc.development") version "0.0.2"
+	id("dreipc.development") version "0.0.3"
 }
 
 group = "dreipc"

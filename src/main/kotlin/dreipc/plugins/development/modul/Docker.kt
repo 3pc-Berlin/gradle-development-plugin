@@ -68,6 +68,9 @@ class Docker : Plugin<Project> {
   }
 
   private fun createDockerFileTask(project: Project) = project.afterEvaluate {
+    val portValue = System.getenv("DOCKER_EXPOSE_PORT") ?: "$DEFAULT_EXPOSE_PORT"
+    val port = portValue.toInt()
+
     project.tasks.register("createDockerfile", Dockerfile::class.java) {
       group = "docker"
       destFile.set(project.file("${project.buildDir}/Dockerfile"))
@@ -75,7 +78,7 @@ class Docker : Plugin<Project> {
       val javaVersion = properties["sourceCompatibility"]
       from("$DOCKER_BASE_IMAGE:$javaVersion")
 
-      val port = System.getenv("DOCKER_EXPOSE_PORT").toIntOrNull() ?: DEFAULT_EXPOSE_PORT
+
       exposePort(port)
       environmentVariable("JAVA_OPTS_LOCAL_DEFAULTS", JAVA_OPTS_DEFAULT)
       environmentVariable("JAVA_OPTS_HARDCODED", "")
