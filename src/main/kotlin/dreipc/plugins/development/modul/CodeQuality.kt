@@ -54,29 +54,38 @@ class CodeQuality : Plugin<Project> {
   private fun configSpotless(project: Project) {
     val spotless = project.extensions["spotless"] as SpotlessExtension
 
-    with(spotless) {
-      java {
-        project.fileTree(".") {
-          include("**/*.java")
-          exclude("**/build/**", "**/build-*/**")
-        }
-        toggleOffOn()
-        palantirJavaFormat()
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
+    if (project.plugins.hasPlugin("java")) {
+      with(spotless) {
+        java {
+          project.fileTree(".") {
+            include("**/*.java")
+            exclude("**/build/**", "**/build-*/**")
+          }
+          toggleOffOn()
+          palantirJavaFormat()
+          removeUnusedImports()
+          trimTrailingWhitespace()
+          endWithNewline()
 
-        replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
-        replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\s*\\*/\\n)", "§1")
+          importOrder("", "java|javax", "\\#")
+
+          replaceRegex("Remove empty lines before end of block", "\\n[\\n]+(\\s*})(?=\\n)", "\n$1")
+          replaceRegex("Remove trailing empty comment lines.", "\\n\\s*\\*(\\n\\s*\\*/\\n)", "§1")
+        }
       }
-      kotlin {
-        project.fileTree(".") {
-          include("**/*.kt")
-        }
-        trimTrailingWhitespace()
-        encoding("utf-8")
+    }
 
-        ktlint().editorConfigOverride(mapOf("disabled_rules" to "no-wildcard-imports,filename", "indent_size" to 2))
+    if (project.plugins.hasPlugin("kotlin")) {
+      with(spotless) {
+        kotlin {
+          project.fileTree(".") {
+            include("**/*.kt")
+          }
+          trimTrailingWhitespace()
+          encoding("utf-8")
+
+          ktlint().editorConfigOverride(mapOf("disabled_rules" to "no-wildcard-imports,filename", "indent_size" to 2))
+        }
       }
     }
   }

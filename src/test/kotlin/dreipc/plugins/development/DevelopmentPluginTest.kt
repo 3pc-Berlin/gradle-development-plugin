@@ -12,7 +12,7 @@ class DevelopmentPluginTest {
 
   @BeforeEach
   fun setUp() {
-    pluginProject.pluginManager.apply("dreipc.development")
+    pluginProject.pluginManager.apply("de.dreipc.development")
   }
 
   @Test

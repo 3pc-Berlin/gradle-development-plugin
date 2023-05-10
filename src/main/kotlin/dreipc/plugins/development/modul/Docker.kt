@@ -1,6 +1,5 @@
 package dreipc.plugins.development.modul
 
-import com.bmuschko.gradle.docker.DockerJavaApplicationPlugin
 import com.bmuschko.gradle.docker.tasks.AbstractDockerRemoteApiTask
 import com.bmuschko.gradle.docker.tasks.RegistryCredentialsAware
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
@@ -23,7 +22,7 @@ class Docker : Plugin<Project> {
     " -Dfile.encoding=UTF-8 -DLC_CTYPE=UTF-8"
 
   override fun apply(project: Project) {
-    project.plugins.apply(DockerJavaApplicationPlugin::class.java)
+    project.plugins.apply("com.bmuschko.docker-java-application")
 
     configureRegistryCredentials(project)
     configureDockerAPI(project)
@@ -78,7 +77,6 @@ class Docker : Plugin<Project> {
       val javaVersion = properties["sourceCompatibility"]
       from("$DOCKER_BASE_IMAGE:$javaVersion")
 
-
       exposePort(port)
       environmentVariable("JAVA_OPTS_LOCAL_DEFAULTS", JAVA_OPTS_DEFAULT)
       environmentVariable("JAVA_OPTS_HARDCODED", "")
@@ -122,6 +120,7 @@ class Docker : Plugin<Project> {
 
   private fun addDockerIgnore() {
     val dockerIgnoreFile = File(".dockerignore")
+    if (dockerIgnoreFile.exists()) return
 
     val dockerIgnoreContent = this::class.java.classLoader.getResourceAsStream(".dockerignore")
       ?.bufferedReader()

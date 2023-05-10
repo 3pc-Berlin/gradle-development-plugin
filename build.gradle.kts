@@ -1,20 +1,25 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
 	`java-gradle-plugin`
 	`kotlin-dsl`
-	kotlin("jvm") version "1.8.10"
-	id("com.gradle.plugin-publish") version "1.1.0"
+	kotlin("jvm") version "1.8.0"
+	id("com.gradle.plugin-publish") version "1.2.0"
 	id("dreipc.development") version "0.0.3"
 }
 
-group = "dreipc"
+group = "de.dreipc"
 
 gradlePlugin {
 	plugins {
 		create("dreipcDevPlugin") {
-			id = "dreipc.development"
+			website.set("https://3pc.de")
+			vcsUrl.set("https://gitlab.3pc.de/")
+			id = "de.dreipc.development"
 			displayName = "3pc Java Development Plugin"
-			description = "Pre configured external plugins for 3pc Java Projects."
+			description = "Pre configured external plugins for 3pc Java Projects. helps to reduce boiler plate configs and push standards.."
 			implementationClass = "dreipc.plugins.development.DevelopmentPlugin"
+			tags.set(listOf("dev", "java", "lombok", "lint", "docker", "versioning", "test"))
 		}
 	}
 }
@@ -27,22 +32,27 @@ repositories {
 
 dependencies {
 	// Kotlin
-	implementation(kotlin("stdlib", "1.8.10"))
+	implementation(kotlin("stdlib", "1.8.0"))
 
 	//Plugins see: https://plugins.gradle.org/
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:8.0.1")
 	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 
-	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.17.0")
-	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
+	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.18.0")
+	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.1.0")
 	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
 
-	implementation("com.bmuschko:gradle-docker-plugin:9.3.0")
+	implementation("com.bmuschko:gradle-docker-plugin:9.3.1")
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+}
+
+extensions.findByName("buildScan")?.withGroovyBuilder {
+	setProperty("termsOfServiceUrl", "https://gradle.com/terms-of-service")
+	setProperty("termsOfServiceAgree", "yes")
 }
 
 publishing {
