@@ -8,7 +8,7 @@ plugins {
 	id("de.3pc.development") version "0.0.4"
 }
 
-group = "de.dreipc"
+group = "de.3pc"
 
 gradlePlugin {
 	plugins {
