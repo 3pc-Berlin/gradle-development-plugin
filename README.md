@@ -28,7 +28,7 @@ Add the plugin inside your `build.gradle(.kts)`
 ```groovy
 // build.gradle(.kts)
 plugins{
-  id("dreipc.development") version "0.0.2"
+    id("de.3pc.development") version "0.0.4"
 }
 ```
 
