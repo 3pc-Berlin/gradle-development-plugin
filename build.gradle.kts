@@ -14,10 +14,10 @@ gradlePlugin {
 	plugins {
 		create("dreipcDevPlugin") {
 			website.set("https://3pc.de")
-			vcsUrl.set("https://gitlab.3pc.de/")
-			id = "de.dreipc.development"
+			vcsUrl.set("https://github.com/3pc-Berlin/gradle-development-plugin")
+			id = "de.3pc.development"
 			displayName = "3pc Java Development Plugin"
-			description = "Pre configured external plugins for 3pc Java Projects. helps to reduce boiler plate configs and push standards.."
+			description = "Pre configured external plugins for 3pc Java Projects, helps to reduce boiler plate configs and push standards."
 			implementationClass = "dreipc.plugins.development.DevelopmentPlugin"
 			tags.set(listOf("dev", "java", "lombok", "lint", "docker", "versioning", "test"))
 		}
