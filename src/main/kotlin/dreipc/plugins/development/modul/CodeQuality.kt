@@ -57,10 +57,12 @@ class CodeQuality : Plugin<Project> {
     if (project.plugins.hasPlugin("java")) {
       with(spotless) {
         java {
-          project.fileTree(".") {
-            include("**/*.java")
-            exclude("**/build/**", "**/build-*/**")
-          }
+          target(
+            project.fileTree(".") {
+              include("**/*.java")
+              exclude("**/build/**")
+            },
+          )
           toggleOffOn()
           palantirJavaFormat()
           removeUnusedImports()
