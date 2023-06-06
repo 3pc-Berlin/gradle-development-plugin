@@ -23,8 +23,9 @@ class Java : Plugin<Project> {
     // ADD Default  3pc Maven Repository
     project.afterEvaluate {
       repositories {
-        maven(url = "https://nexus.3pc.de/repository/maven-group/")
+        mavenCentral()
         mavenLocal()
+        maven(url = "https://nexus.3pc.de/repository/maven-group/")
       }
     }
   }
