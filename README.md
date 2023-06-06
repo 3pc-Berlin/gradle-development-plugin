@@ -28,7 +28,7 @@ Add the plugin inside your `build.gradle(.kts)`
 ```groovy
 // build.gradle(.kts)
 plugins{
-    id("de.3pc.development") version "0.0.4"
+    id("de.3pc.development") version "0.0.7"
 }
 ```
 
@@ -44,3 +44,15 @@ pluginManagement {
 rootProject.name = "Your great project name goes here!" 
 
 ```
+
+
+### Change Docker Runtime Image (uses by gradle as base image for spring boot images)
+```groovy
+// build.gradle(.kts)
+
+dockerConfig{
+    image.set("openjdk:11-jre-slim")
+}
+
+```
+

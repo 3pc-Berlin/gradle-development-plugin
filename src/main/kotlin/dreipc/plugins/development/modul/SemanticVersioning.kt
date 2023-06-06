@@ -58,6 +58,7 @@ class SemanticVersioning : Plugin<Project> {
 
     val version = System.getenv("CI_APP_VERSION") ?: semver.info.toString()
     project.version = version
+
     project.project.version = version
     project.allprojects.forEach { it.version = version }
   }

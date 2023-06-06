@@ -1,6 +1,12 @@
 package dreipc.plugins.development
 
-import dreipc.plugins.development.modul.*
+import dreipc.plugins.development.modul.Java
+import dreipc.plugins.development.modul.Lombok
+import dreipc.plugins.development.modul.SemanticVersioning
+import dreipc.plugins.development.modul.Testing
+import dreipc.plugins.development.modul.CodeQuality
+import dreipc.plugins.development.modul.GradlePropertyExpansion
+import dreipc.plugins.development.modul.Docker
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

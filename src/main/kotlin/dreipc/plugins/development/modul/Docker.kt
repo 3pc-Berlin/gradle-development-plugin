@@ -6,6 +6,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import dreipc.plugins.development.extension.DockerPluginExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.os.OperatingSystem.current
@@ -21,8 +22,18 @@ class Docker : Plugin<Project> {
     " -Djava.awt.headless=true" +
     " -Dfile.encoding=UTF-8 -DLC_CTYPE=UTF-8"
 
+  var dockerImage = ""
+
   override fun apply(project: Project) {
     project.plugins.apply("com.bmuschko.docker-java-application")
+
+    val extension = project.extensions.create("dockerConfig", DockerPluginExtension::class.java)
+    val javaVersion = project.properties["sourceCompatibility"]
+    extension.image.set("$DOCKER_BASE_IMAGE:$javaVersion")
+
+    project.afterEvaluate{
+      dockerImage = extension.image.get()
+    }
 
     configureRegistryCredentials(project)
     configureDockerAPI(project)
@@ -74,8 +85,7 @@ class Docker : Plugin<Project> {
       group = "docker"
       destFile.set(project.file("${project.buildDir}/Dockerfile"))
 
-      val javaVersion = properties["sourceCompatibility"]
-      from("$DOCKER_BASE_IMAGE:$javaVersion")
+      from(dockerImage)
 
       exposePort(port)
       environmentVariable("JAVA_OPTS_LOCAL_DEFAULTS", JAVA_OPTS_DEFAULT)

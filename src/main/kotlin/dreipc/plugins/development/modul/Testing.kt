@@ -54,8 +54,6 @@ class Testing : Plugin<Project> {
       }
     }
 
-    project.configurations.get("implementation").allDependencies.forEach { println("name: ${it.name} group: ${it.group}") }
-
     if (project.plugins.hasPlugin("org.springframework.boot")) {
       project.dependencies {
         "testImplementation"("org.springframework.boot:spring-boot-starter-test")

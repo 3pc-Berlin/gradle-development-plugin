@@ -5,7 +5,7 @@ plugins {
 	`kotlin-dsl`
 	kotlin("jvm") version "1.8.0"
 	id("com.gradle.plugin-publish") version "1.2.0"
-	id("de.3pc.development") version "0.0.4"
+	id("de.3pc.development") version "0.0.6-dev.54"
 }
 
 group = "de.3pc"
@@ -48,6 +48,8 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+
+	testImplementation("org.springframework.boot:spring-boot-gradle-plugin:3.1.0")
 }
 
 extensions.findByName("buildScan")?.withGroovyBuilder {
