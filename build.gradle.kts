@@ -38,16 +38,16 @@ dependencies {
 	implementation("io.freefair.lombok:io.freefair.lombok.gradle.plugin:8.0.1")
 	implementation("io.wusa.semver-git-plugin:io.wusa.semver-git-plugin.gradle.plugin:2.3.7")
 
-	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.18.0")
+	implementation("com.diffplug.spotless:spotless-plugin-gradle:6.19.0")
 	implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.1.0")
-	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.5.0")
+	implementation("net.ltgt.gradle:gradle-nullaway-plugin:1.6.0")
 
 	implementation("com.bmuschko:gradle-docker-plugin:9.3.1")
 
 	// Testing
 	testImplementation("org.assertj:assertj-core:3.24.2")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
 }
 
 extensions.findByName("buildScan")?.withGroovyBuilder {
