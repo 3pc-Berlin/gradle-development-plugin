@@ -31,7 +31,7 @@ class Docker : Plugin<Project> {
     val javaVersion = project.properties["sourceCompatibility"]
     extension.image.set("$DOCKER_BASE_IMAGE:$javaVersion")
 
-    project.afterEvaluate{
+    project.afterEvaluate {
       dockerImage = extension.image.get()
     }
 
