@@ -61,3 +61,6 @@ publishing {
 	}
 }
 
+ktlint {
+    disabledRules.set(setOf("no-wildcard-imports"))
+}
