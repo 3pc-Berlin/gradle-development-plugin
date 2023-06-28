@@ -36,7 +36,7 @@ class Docker : Plugin<Project> {
     addDockerIgnore()
   }
 
-  private fun buildImageName(project: Project): String {
+  private fun buildImageNameTag(project: Project): String {
     return System.getenv("CI_DOCKER_NAMEONLY:${project.version}")
       ?: "$DEFAULT_REPO_URL/${project.name}:${project.version}" // allow CI to override image path (e.g. add /temp/ to the path)
   }
@@ -98,21 +98,21 @@ class Docker : Plugin<Project> {
       group = "docker"
 
       inputDir.set(project.buildDir)
-      images.add(buildImageName(project))
+      images.add(buildImageNameTag(project))
     }
   }
 
   private fun pushImageTask(project: Project) {
     project.tasks.register("pushImage", DockerPushImage::class.java) {
       group = "docker"
-      images.add(buildImageName(project))
+      images.add(buildImageNameTag(project))
     }
   }
 
   private fun removeImageTask(project: Project) {
     project.tasks.register("removeImage", DockerRemoveImage::class.java) {
       group = "docker"
-      targetImageId(buildImageName(project))
+      targetImageId(buildImageNameTag(project))
       force.set(true)
       onError { System.out.println("No previous versioned image to delete") }
     }
