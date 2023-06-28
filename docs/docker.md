@@ -6,16 +6,22 @@ Additionally this plugin pre-configures:
 - **tag**: Calculated semantic version
 
 ---
-### Settings through Environment Variable:
+### Settings through environment variables
 
-| Env Variable | Description                                   | Default Value  | 
-|------------------|-----------------------------------------------|----------------|
-| `DOCKER_REPOSITORY_URL`| Docker Repository URL                         | `nexus.3pc.de` | 
-| `DOCKER_USERNAME` | Username used for the docker repository login | -              | 
-| `DOCKER_PASSWORD` | Password used for the docker repository login | -              | 
-| `DOCKER_EXPOSE_PORT` | Docker Expose Port for the Application        | `8080`         |
-| `JAVA_OPTS_DEFAULT` | Java JVM Settings for the running Application |   <pre>-Djava.security.egd=file:/dev/./urandom -XX:TieredStopAtLevel=1 </br>-Dspring.jmx.enabled=true -Dspring.config.location=classpath:/application.yml </br>-Djava.awt.headless=true </br>-Dfile.encoding=UTF-8 -DLC_CTYPE=UTF-8</pre>   |
-| `JAVA_OPTS_LOCAL_DEFAULTS` | Java JVM Settings unique to the application   | - | 
+Docker repository configuration, set by CI or manually in local dev env.
+
+| Env Variable               | Description                                   | Default Value  |
+|----------------------------|-----------------------------------------------|----------------|
+| `DOCKER_REPOSITORY_URL`    | Docker Repository URL                         | `nexus.3pc.de` |
+| `DOCKER_USERNAME`          | Username used for the docker repository login | -              |
+| `DOCKER_PASSWORD`          | Password used for the docker repository login | -              |
+| `DOCKER_EXPOSE_PORT`       | Docker Expose Port for the Application        | `8080`         |
+| `DOCKER_USER_EMAIL`        | Registry email address needed to push images  | -              |
+
+System environment Variables to allow changing JAVA_OPTS parameters without changing application source code
+
+- JAVA_OPTS_GLOBAL_DEFAULTS - set to override JAVA_OPTS_PLUGIN_DEFAULTS (hardcoded defaults, see `Docker.kt`). Standard JAVA_OPTS for all projects. E.g. provided by Kubernetes ConfigMap
+- JAVA_OPTS_ADDITIONAL - add JAVA_OPTS specific to application (set by e.g. Helm Chart)
 
 ### .dockerignore
 The plugin adds automatically a `.dockerignore` file to spring projects to increase docker build speed.
