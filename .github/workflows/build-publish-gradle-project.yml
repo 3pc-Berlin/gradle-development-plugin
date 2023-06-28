@@ -13,6 +13,7 @@ on:
 jobs:
   build-publish-gradle-project:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
