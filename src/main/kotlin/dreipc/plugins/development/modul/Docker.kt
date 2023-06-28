@@ -16,7 +16,7 @@ class Docker : Plugin<Project> {
   private val DEFAULT_REPO_URL = "nexus.3pc.de"
   private val DOCKER_BASE_IMAGE = "nexus.3pc.de/java"
   private var DEFAULT_EXPOSE_PORT = 8080
-  private var JAVA_OPTS_PLUGIN_DEFAULTS = "" + 
+  private var JAVA_OPTS_PLUGIN_DEFAULTS = "" +
     " -Djava.security.egd=file:/dev/./urandom -XX:TieredStopAtLevel=1" +
     " -Dspring.jmx.enabled=true -Dspring.config.location=classpath:/application.yml" +
     " -Djava.awt.headless=true" +
