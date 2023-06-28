@@ -87,7 +87,7 @@ class Docker : Plugin<Project> {
       entryPoint(
         "sh",
         "-c",
-        "java \${JAVA_OPTS_GLOBAL_DEFAULTS_11:-\$JAVA_OPTS_PLUGIN_DEFAULTS} \$JAVA_OPTS_ADDITIONAL -jar /app.jar",
+        "java \${JAVA_OPTS_GLOBAL_DEFAULTS:-\$JAVA_OPTS_PLUGIN_DEFAULTS} \$JAVA_OPTS_ADDITIONAL -jar /app.jar",
       )
     }
   }

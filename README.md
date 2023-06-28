@@ -52,15 +52,5 @@ CI integration variables
 - CI_APP_VERSION - allow to enforce a CI-standard versioning scheme
 - CI_DOCKER_NAMEONLY - allow to enforce a CI-standard docker naming convention
 
-System environment Variables to allow changing JAVA_OPTS parameters without changing application source code
+See Docker runtime variables in [docs/docker.md](docs/docker.md)
 
-- JAVA_OPTS_GLOBAL_DEFAULTS_17 - set to override JAVA_OPTS_PLUGIN_DEFAULTS (hardcoded defaults, see `Docker.kt`). Standard JAVA_OPTS for all projects. E.g. provided by Kubernetes ConfigMap
-- JAVA_OPTS_ADDITIONAL - add JAVA_OPTS specific to application (set by e.g. Helm Chart)
-
-Docker repository configuration, set by CI or manually in local dev env.
-
-- DOCKER_REPOSITORY_URL
-- DOCKER_USERNAME
-- DOCKER_PASSWORD
-- DOCKER_USER_EMAIL
-- DOCKER_EXPOSE_PORT
