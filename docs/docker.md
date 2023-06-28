@@ -16,7 +16,7 @@ Docker repository configuration, set by CI or manually in local dev env.
 | `DOCKER_USERNAME`          | Username used for the docker repository login | -              |
 | `DOCKER_PASSWORD`          | Password used for the docker repository login | -              |
 | `DOCKER_EXPOSE_PORT`       | Docker Expose Port for the Application        | `8080`         |
-| `DOCKER_USER_EMAIL`        | E-mail (currently not used in code)           | -              |
+| `DOCKER_USER_EMAIL`        | Registry email address needed to push images  | -              |
 
 System environment Variables to allow changing JAVA_OPTS parameters without changing application source code
 
