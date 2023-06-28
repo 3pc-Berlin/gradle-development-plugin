@@ -4,7 +4,7 @@ This Plugin adds and configures some code quality external plugins to analyse co
 ---
 
 ### Code Formatting | [Spotless Plugin](https://github.com/diffplug/spotless)
-The Grade [Spotless plugin](https://github.com/diffplug/spotless) is enabled and added into a git pre-commit hook (see: `.git/hooks` in your project directory), to make sure the code is formatted using the [Palantir style](https://github.com/palantir/palantir-java-format).
+The Gradle [Spotless plugin](https://github.com/diffplug/spotless) is enabled and added into a git pre-commit hook (see: `.git/hooks` in your project directory), to make sure the code is formatted using the [Palantir style](https://github.com/palantir/palantir-java-format).
 
 ---
 
