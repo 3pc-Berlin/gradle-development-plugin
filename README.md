@@ -45,6 +45,16 @@ rootProject.name = "Your great project name goes here!"
 
 ```
 
+## Environment variables
+
+CI integration variables
+
+- CI_APP_VERSION - allow to enforce a CI-standard versioning scheme
+- CI_DOCKER_NAMEONLY - allow to enforce a CI-standard docker naming convention
+
+See Docker runtime variables in [docs/docker.md](docs/docker.md)
+
+
 
 ### Change Docker Runtime Image (uses by gradle as base image for spring boot images)
 ```groovy
