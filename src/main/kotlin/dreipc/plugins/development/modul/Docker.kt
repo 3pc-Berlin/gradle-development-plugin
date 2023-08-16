@@ -17,11 +17,15 @@ class Docker : Plugin<Project> {
   private val DEFAULT_REPO_URL = "nexus.3pc.de"
   private val DOCKER_BASE_IMAGE = "nexus.3pc.de/java"
   private var DEFAULT_EXPOSE_PORT = 8080
+  // JAVA_OPTS_GLOBAL_DEFAULTS from custom Java images will override below settings. Left in case we'll use third-part images in future 
   private var JAVA_OPTS_PLUGIN_DEFAULTS = "" +
-    " -Djava.security.egd=file:/dev/./urandom -XX:TieredStopAtLevel=1" +
-    " -Dspring.jmx.enabled=true -Dspring.config.location=classpath:/application.yml" +
+    " -Djava.security.egd=file:/dev/./urandom" + 
+    " -XX:TieredStopAtLevel=1" +
+    " -Dspring.jmx.enabled=true" +
+    " -Dspring.config.location=classpath:/application.yml" +
     " -Djava.awt.headless=true" +
-    " -Dfile.encoding=UTF-8 -DLC_CTYPE=UTF-8"
+    " -Dfile.encoding=UTF-8 -DLC_CTYPE=UTF-8" +
+    " -XX:MaxRAMPercentage=90.0"
 
   var dockerImage = ""
 
