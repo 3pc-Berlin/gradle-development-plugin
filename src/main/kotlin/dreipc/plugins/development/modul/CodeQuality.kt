@@ -28,7 +28,8 @@ class CodeQuality : Plugin<Project> {
     configErrorProne(project)
     configNullaway(project)
 
-    addGitHock()
+    // ToDo: fix on Mac OS (M1) and re-enable
+    // addGitHock()
   }
 
   private fun addGitHock() {
