@@ -53,7 +53,7 @@ class Docker : Plugin<Project> {
   }
 
   private fun buildImageNameTag(project: Project): String {
-    return System.getenv("CI_DOCKER_NAMEONLY") + ":" + project.version
+    return (System.getenv("CI_DOCKER_NAMEONLY") + ":" + project.version)
       ?: "$DEFAULT_REPO_URL/${project.name}:${project.version}" // allow CI to override image path (e.g. add /temp/ to the path)
   }
 
