@@ -53,8 +53,9 @@ class Docker : Plugin<Project> {
   }
 
   private fun buildImageNameTag(project: Project): String {
-    return (System.getenv("CI_DOCKER_NAMEONLY") + ":" + project.version)
-      ?: "$DEFAULT_REPO_URL/${project.name}:${project.version}" // allow CI to override image path (e.g. add /temp/ to the path)
+    val base = System.getenv("CI_DOCKER_NAMEONLY")
+      ?: "$DEFAULT_REPO_URL/${project.name}" // allow CI to override image path (e.g. add /temp/ to the path)
+    return "$base:${project.version}"
   }
 
   private fun configureRegistryCredentials(
@@ -89,7 +90,7 @@ class Docker : Plugin<Project> {
 
     project.tasks.register("createDockerfile", Dockerfile::class.java) {
       group = "docker"
-      destFile.set(project.file("${project.buildDir}/Dockerfile"))
+      destFile.set(project.file("${project.layout.buildDirectory}/Dockerfile"))
 
       from(dockerImage)
 
@@ -112,7 +113,7 @@ class Docker : Plugin<Project> {
       dependsOn("createDockerfile")
       group = "docker"
 
-      inputDir.set(project.buildDir)
+      inputDir.set(project.layout.buildDirectory)
       images.add(buildImageNameTag(project))
     }
   }
