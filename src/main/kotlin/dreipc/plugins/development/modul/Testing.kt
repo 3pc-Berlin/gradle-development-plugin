@@ -136,11 +136,11 @@ class Testing : Plugin<Project> {
     )
 
     val javaDirectories = fileTree(
-      "${project.buildDir}/intermediates/classes/debug",
+      "${project.layout.buildDirectory}/intermediates/classes/debug",
     ) { exclude(excludedFiles) }
 
     val kotlinDirectories = fileTree(
-      "${project.buildDir}/tmp/kotlin-classes/debug",
+      "${project.layout.buildDirectory}/tmp/kotlin-classes/debug",
     ) { exclude(excludedFiles) }
 
     val coverageSrcDirectories = listOf(
@@ -152,7 +152,7 @@ class Testing : Plugin<Project> {
     reportTask.sourceDirectories.setFrom(files(coverageSrcDirectories))
 
     reportTask.executionData.setFrom(
-      files("${project.buildDir}/jacoco/*.exec"),
+      files("${project.layout.buildDirectory}/jacoco/*.exec"),
     )
   }
 }
