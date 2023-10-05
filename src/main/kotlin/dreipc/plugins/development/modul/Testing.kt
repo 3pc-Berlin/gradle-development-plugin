@@ -20,9 +20,10 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  */
 class Testing : Plugin<Project> {
 
-  val TESTCONTAINERS_VERSION = "1.17.6"
-  val JUNIT_LAUNCHER_VERSION = "1.9.2"
-  val REACTOR_BLOCKHOUND_VERSION = "1.0.7.RELEASE"
+  val TESTCONTAINERS_VERSION = "1.19.1"
+  val JUNIT_LAUNCHER_VERSION = "1.10.0"
+  val REACTOR_BLOCKHOUND_VERSION = "1.0.8.RELEASE"
+  val REDIS_TESTCONTAINER_VERSION = "1.6.4"
 
   override fun apply(project: Project) {
     project.plugins.apply(JacocoPlugin::class.java)
@@ -38,6 +39,10 @@ class Testing : Plugin<Project> {
     project.dependencies {
       "testRuntimeOnly"("org.junit.platform:junit-platform-launcher:$JUNIT_LAUNCHER_VERSION")
       "testImplementation"("org.testcontainers:junit-jupiter:$TESTCONTAINERS_VERSION")
+
+      "testImplementation"("org.testcontainers:mongodb:$TESTCONTAINERS_VERSION")
+      "testImplementation"("org.testcontainers:elasticsearch:$TESTCONTAINERS_VERSION")
+      "testImplementation"("com.redis.testcontainers:testcontainers-redis:$REDIS_TESTCONTAINER_VERSION")
     }
 
     project.afterEvaluate {
