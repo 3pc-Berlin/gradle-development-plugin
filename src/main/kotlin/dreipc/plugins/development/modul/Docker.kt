@@ -90,14 +90,14 @@ class Docker : Plugin<Project> {
 
     project.tasks.register("createDockerfile", Dockerfile::class.java) {
       group = "docker"
-      destFile.set(project.file("${project.layout.buildDirectory}/Dockerfile"))
+      destFile.set(project.layout.buildDirectory.file("Dockerfile"))
 
       from(dockerImage)
 
       exposePort(port)
       environmentVariable("JAVA_OPTS_PLUGIN_DEFAULTS", JAVA_OPTS_PLUGIN_DEFAULTS)
 
-      val jarName = "${project.rootProject.name}-${project.rootProject.version}.jar"
+      val jarName = "${project.rootProject.name}-${project.version}.jar"
       copyFile("libs/$jarName", "/app.jar")
 
       entryPoint(
