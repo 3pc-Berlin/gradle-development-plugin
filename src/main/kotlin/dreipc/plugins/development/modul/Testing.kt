@@ -19,9 +19,8 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * Author: Sören Räuchle
  */
 class Testing : Plugin<Project> {
-
   val TESTCONTAINERS_VERSION = "1.19.1"
-  val JUNIT_LAUNCHER_VERSION = "1.10.0"
+  val JUNIT_LAUNCHER_VERSION = "1.9.3"
   val REACTOR_BLOCKHOUND_VERSION = "1.0.8.RELEASE"
   val REDIS_TESTCONTAINER_VERSION = "1.6.4"
 
