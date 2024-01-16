@@ -19,10 +19,10 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * Author: Sören Räuchle
  */
 class Testing : Plugin<Project> {
-  val TESTCONTAINERS_VERSION = "1.19.1"
-  val JUNIT_LAUNCHER_VERSION = "1.9.3"
-  val REACTOR_BLOCKHOUND_VERSION = "1.0.8.RELEASE"
-  val REDIS_TESTCONTAINER_VERSION = "1.6.4"
+  val testContainersVersion = "1.19.1"
+  val junitLauncherVersion = "1.9.3"
+  val reactorBlockhountVersion = "1.0.8.RELEASE"
+  val redisTestcontainerVersion = "1.6.4"
 
   override fun apply(project: Project) {
     project.plugins.apply(JacocoPlugin::class.java)
@@ -36,12 +36,12 @@ class Testing : Plugin<Project> {
     project.codeCoverage()
 
     project.dependencies {
-      "testRuntimeOnly"("org.junit.platform:junit-platform-launcher:$JUNIT_LAUNCHER_VERSION")
-      "testImplementation"("org.testcontainers:junit-jupiter:$TESTCONTAINERS_VERSION")
+      "testRuntimeOnly"("org.junit.platform:junit-platform-launcher:$junitLauncherVersion")
+      "testImplementation"("org.testcontainers:junit-jupiter:$testContainersVersion")
 
-      "testImplementation"("org.testcontainers:mongodb:$TESTCONTAINERS_VERSION")
-      "testImplementation"("org.testcontainers:elasticsearch:$TESTCONTAINERS_VERSION")
-      "testImplementation"("com.redis.testcontainers:testcontainers-redis:$REDIS_TESTCONTAINER_VERSION")
+      "testImplementation"("org.testcontainers:mongodb:$testContainersVersion")
+      "testImplementation"("org.testcontainers:elasticsearch:$testContainersVersion")
+      "testImplementation"("com.redis.testcontainers:testcontainers-redis:$redisTestcontainerVersion")
     }
 
     project.afterEvaluate {
@@ -53,7 +53,7 @@ class Testing : Plugin<Project> {
       if ("spring-boot-starter-webflux" in dependencies || "reactor-core" in dependencies) {
         project.dependencies {
           "testImplementation"("io.projectreactor:reactor-test")
-          "testImplementation"("io.projectreactor.tools:blockhound:$REACTOR_BLOCKHOUND_VERSION")
+          "testImplementation"("io.projectreactor.tools:blockhound:$reactorBlockhountVersion")
         }
       }
     }
@@ -127,7 +127,7 @@ class Testing : Plugin<Project> {
     }
 
     val excludedFiles = listOf(
-      "**/google/**", "**/proto/**", // Google Protobuf Code generated Classes
+      "**/google/**", "**/proto/**",
       "**/models/**", "**/model/**",
       "**/config/*",
       "**/exceptions/*", "**/exception/*",

@@ -14,12 +14,12 @@ import java.io.File
 
 class Docker : Plugin<Project> {
 
-  private val DEFAULT_REPO_URL = "nexus.3pc.de"
-  private val DOCKER_BASE_IMAGE = "nexus.3pc.de/java"
-  private var DEFAULT_EXPOSE_PORT = 8080
+  private val defaultRepoUrl = "nexus.3pc.de"
+  private val dockerBaseImage = "nexus.3pc.de/java"
+  private var defaultExposePort = 8080
 
   // JAVA_OPTS_GLOBAL_DEFAULTS from custom Java images will override below settings. Left in case we'll use third-part images in future
-  private var JAVA_OPTS_PLUGIN_DEFAULTS = "" +
+  private var javaOptionsDefaults = "" +
     " -Djava.security.egd=file:/dev/./urandom" +
     " -XX:TieredStopAtLevel=1" +
     " -Dspring.jmx.enabled=true" +
@@ -35,7 +35,7 @@ class Docker : Plugin<Project> {
 
     val extension = project.extensions.create("dockerConfig", DockerPluginExtension::class.java)
     val javaVersion = project.properties["sourceCompatibility"]
-    extension.image.set("$DOCKER_BASE_IMAGE:$javaVersion")
+    extension.image.set("$dockerBaseImage:$javaVersion")
 
     project.afterEvaluate {
       dockerImage = extension.image.get()
@@ -54,14 +54,14 @@ class Docker : Plugin<Project> {
 
   private fun buildImageNameTag(project: Project): String {
     val base = System.getenv("CI_DOCKER_NAMEONLY")
-      ?: "$DEFAULT_REPO_URL/${project.name}" // allow CI to override image path (e.g. add /temp/ to the path)
+      ?: "$defaultRepoUrl/${project.name}" // allow CI to override image path (e.g. add /temp/ to the path)
     return "$base:${project.version}"
   }
 
   private fun configureRegistryCredentials(
     project: Project,
   ) {
-    val repoUrl = System.getenv("DOCKER_REPOSITORY_URL") ?: DEFAULT_REPO_URL
+    val repoUrl = System.getenv("DOCKER_REPOSITORY_URL") ?: defaultRepoUrl
     val user = System.getenv("DOCKER_USERNAME") ?: System.getenv("REPO_3PC_USERNAME")
     val password = System.getenv("DOCKER_PASSWORD") ?: System.getenv("REPO_3PC_PWD")
     val email = System.getenv("DOCKER_USER_EMAIL") ?: ""
@@ -85,7 +85,7 @@ class Docker : Plugin<Project> {
   }
 
   private fun createDockerFileTask(project: Project) = project.afterEvaluate {
-    val portValue = System.getenv("DOCKER_EXPOSE_PORT") ?: "$DEFAULT_EXPOSE_PORT"
+    val portValue = System.getenv("DOCKER_EXPOSE_PORT") ?: "$defaultExposePort"
     val port = portValue.toInt()
 
     project.tasks.register("createDockerfile", Dockerfile::class.java) {
@@ -95,7 +95,7 @@ class Docker : Plugin<Project> {
       from(dockerImage)
 
       exposePort(port)
-      environmentVariable("JAVA_OPTS_PLUGIN_DEFAULTS", JAVA_OPTS_PLUGIN_DEFAULTS)
+      environmentVariable("JAVA_OPTS_PLUGIN_DEFAULTS", javaOptionsDefaults)
 
       val jarName = "${project.rootProject.name}-${project.version}.jar"
       copyFile("libs/$jarName", "/app.jar")
